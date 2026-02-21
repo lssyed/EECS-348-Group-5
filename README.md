@@ -8,8 +8,8 @@
 * It calculates the desired operation by following PEMDAS, precedence, and associative rules.
 
 ## Latest Submission
-[01_Project_Plan](./docs/Group%205%20Project%20Plan.pdf)
-[02/08/2026 Meeting Log](./meetinglogs/02_08_2026%20Meeting%20Recap.pdf)
+* [01_Project_Plan](./docs/Group%205%20Project%20Plan.pdf)
+* [02/08/2026 Meeting Log](./meetinglogs/02_08_2026%20Meeting%20Recap.pdf)
 
 ## Structure
 This repository follows a clean and logical structure.
