@@ -1,6 +1,6 @@
 # Project: Arithmetic Expression Evaluator in C++
 **Course** EECS 348: Software Engineering I
-**Group** Group 5
+**Group** 5
 
 ## Project Overview
 * This project is a C++ program designed to parse and evaluate arithmetic expressions.
