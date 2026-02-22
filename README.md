@@ -4,7 +4,7 @@
 
 ## Project Overview
 * This project is a C++ program designed to parse and evaluate arithmetic expressions.
-* It supports numeric constants and operators like +, -, *, /, % and **.
+* It supports numeric constants and operators like +, -, *, /, % and **
 * It calculates the desired operation by following PEMDAS, precedence, and associative rules.
 
 ## Latest Submission
