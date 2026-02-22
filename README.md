@@ -25,6 +25,27 @@ This repository follows a clean and logical structure.
 * `/tools` - Contains scripts to automate tasks in the project. (Later on...)
 * `README.md` - Contains project overview and organization of repository.
 
+---
+
+## Git Branch Policy 🔒
+To keep the history clean and ensure code review happens, developers **must not push directly to the `main` branch**. Work should be done on feature/topic branches and merged via pull requests.
+
+### Enforcement options
+1. **GitHub Branch Protection** (recommended for hosted repositories):
+   * Go to the repository Settings → Branches → Add rule for `main`.
+   * Enable "Require pull request reviews before merging" and disable "Allow push" for everyone except admins.
+   * Optionally enforce status checks or linear history.
+
+2. **Client‑side hook** (for local enforcement):
+   * Copy `tools/prevent_direct_main_push.sh` into `.git/hooks/pre-push` and make it executable:
+     ```sh
+     cp tools/prevent_direct_main_push.sh .git/hooks/pre-push
+     chmod +x .git/hooks/pre-push
+     ```
+   * The script will reject any attempt to push `refs/heads/main` to the remote, printing a message.
+
+> Note: Hooks are not versioned; each contributor must install the hook or use a tooling wrapper such as [Husky](https://typicode.github.io/husky).
+
 ## Group Members
 * **Alec** - Quality Assurance
 * **Alex** - Requirements & Documents Lead
