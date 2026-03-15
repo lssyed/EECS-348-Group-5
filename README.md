@@ -14,6 +14,7 @@
 * [02/22/2026 Meeting Log](./meetinglogs/02_22_2026%20Meeting%204.pdf)
 * [03/01/2026 Meeting Log](./meetinglogs/03_01_2026%20Meeting%205.pdf)
 * [03/08/2026 Meeting Log](./meetinglogs/03_08_2026%20Meeting%206.pdf)
+* [Arithmetic Expression Evaluator Project Plan and Architecture Guide](./docs/Detailed_Expression_Evaluator_Project_Plan.pdf)
 
 ## Structure
 This repository follows a clean and logical structure.
