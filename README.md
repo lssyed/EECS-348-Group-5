@@ -11,6 +11,9 @@
 * [01_Project_Plan](./docs/01_Project_Plan.pdf)
 * [02/08/2026 Meeting Log](./meetinglogs/02_08_2026%20Meeting%20Recap.pdf)
 * [02/15/2026 Meeting Log](./meetinglogs/02_15_2026%20Meeting%20Recap.pdf)
+* [02/22/2026 Meeting Log](./meetinglogs/02_22_2026%20Meeting%204.pdf)
+* [03/01/2026 Meeting Log](./meetinglogs/03_01_2026%20Meeting%205.pdf)
+* [03/08/2026 Meeting Log](./meetinglogs/03_08_2026%20Meeting%206.pdf)
 
 ## Structure
 This repository follows a clean and logical structure.
