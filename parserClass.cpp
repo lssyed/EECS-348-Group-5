@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cctype>
 #include <string>
+#include <cmath>
 using namespace std;
 
 
@@ -21,13 +22,15 @@ class Parser{
 
 
     private:
-        string text = NULL;
+        string text;
         int pos = 0;
-        char currChar = text[pos];
+        char currChar;
 };
 
 Parser::Parser(string str){
     text = str;
+    pos = 0;
+    currChar = (pos < text.length() ? text[pos] : '\0');
 }
 
 void Parser::advance(){
@@ -36,7 +39,7 @@ void Parser::advance(){
         currChar = text[pos];
     }
     else{
-        currChar = NULL;
+        currChar = '\0';
     }
 
 }
@@ -50,7 +53,7 @@ bool Parser::isSpace(char c){
 
 }
 void Parser::skipWhiteSpace(){
-    while(currChar != NULL && isSpace(currChar)){
+    while(currChar != '\0' && isSpace(currChar)){
         advance();
     }
 }
@@ -58,7 +61,7 @@ void Parser::skipWhiteSpace(){
 int Parser::number(){
     string result = "";
     
-    while( currChar!= NULL && isdigit(currChar) ){
+    while( currChar!= '\0' && isdigit(currChar) ){
         result += currChar;
         advance();
     }
@@ -69,25 +72,25 @@ int Parser::number(){
 int Parser::primaryParser(){
     int result;
     skipWhiteSpace();
-    if(currChar!= NULL && isdigit(currChar)){
+    if(currChar!= '\0' && isdigit(currChar)){
         return number();
     }
     if (currChar == '('){
         advance();
-        //result = parseExpression();
+        result = parseExpression();
         skipWhiteSpace();
+
         if(currChar == ')'){
             advance();
         }
         else{
             cout << "MISSING CLOSING PARENTHESIS: " << endl;
-            return;
+            return 0;
         }
         return result;
     }
-    cout << "INVALID EXPRESSION: " << endl;
-    
-
+    cout << "INVALID EXPRESSION" << endl;
+    return 0;
 }
 
 int Parser::parseUnary(){
@@ -110,7 +113,7 @@ int Parser::parsePower(){
     skipWhiteSpace();
 
     if (currChar == '*'){
-        char savedPos = pos;
+        int savedPos = pos;
         advance();
 
         if(currChar == '*'){
@@ -180,6 +183,3 @@ int evaluate(string expression){
 
     return parser.parseExpression();
 }
-
-
-
