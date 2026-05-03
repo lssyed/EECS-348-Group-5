@@ -1,8 +1,9 @@
 /* This file contains the parsers for handling expressions*/
- #include <iostream>
- #include <string>
- #include <cmath>
-
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <stdexcept>
+#include <cctype>
 
 
  class Parser {
@@ -19,6 +20,10 @@
             position = 0;
             curr_char = text[position];
             n = text.length();
+            //Prevent out-of-bounds on empty input
+            if (n > 0) {
+                curr_char = text[position];
+            }
         }
 
         //Moving to next character in input
@@ -141,10 +146,20 @@
                     result *= parse_power();
                 } else if (curr_char == '/'){
                     advance();
-                    result /= parse_power();
+                    //Check for division by 0
+                    int right_side = parse_power();
+                    if (right_side == 0) {
+                        throw std::runtime_error("Division by zero");
+                    }
+                    result /= right_side;
                 } else if (curr_char == '%'){
                     advance();
-                    result %= parse_power();
+                    //Check for module by 0
+                    int right_side = parse_power();
+                    if (right_side == 0) {
+                        throw std::runtime_error("Modulo by zero");
+                    }
+                    result %= right_side;
                 } else {
                     break;
                 }
@@ -171,6 +186,18 @@
             }
             return result;
         }
+        //Ensuring entire string is evaluated
+        int parse() {
+            int result = parse_expression();
+            skip_whitespace();
+
+            //If there are characters left still
+            //then overall expression invalid
+            if (curr_char !=0) {
+                throw std::runtime_error("Invalid expression: unexpected characters at the end.");
+            }
+            return result;
+        }
  };
 
 
@@ -185,10 +212,16 @@ int evaluate(const std::string& expression){
 int main() {
     std::string expr;
     std::cout<<"Enter your expression: ";
-    std::cin>>expr;
+    std::getline(std::cin, expr);
 
-    int result = evaluate(expr);
-    std::cout<<"Result: "<<result;
+    //Wrapping the execution in a try-catch block for robust error handling
+    try {
+        int result = evaluate(expr);
+        std::cout << "Result: " << result << std::endl;
+    } catch (const std::exception& e) {
+        //Neatly prints "div by zero" or "invalid expr" without crashing app
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
     return 0;
 }
 
