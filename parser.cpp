@@ -177,7 +177,7 @@ class Parser {
 //gathers expressions to parse and creates object of it
 int evaluate(const std::string& expression){
 Parser parser(expression);
-return parser.parse_expression(); 
+return parser.parse(); 
 }
 
 int main() {
