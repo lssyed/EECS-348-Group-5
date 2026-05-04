@@ -49,7 +49,7 @@ class Parser {
             number = std::stoi(result);
             return number;
         }
-        //Primary Parser
+        //Primary Parser changes
         //Lowest level of the parser that includes parsing for parentheses
         int parse_primary(){
             int result;
