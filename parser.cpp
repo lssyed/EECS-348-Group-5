@@ -7,12 +7,13 @@
 
 class Parser {
     private:
-        std::string text;
-        int n; //Length of string
-        int position; //Position
+        std::string text; // Input string
+        int n; // Length of string
+        int position; // Position
         char curr_char;
     public:
         Parser(std::string input){
+            // Initialize the parser with the input string
             text = input;
             position = 0;
             n = text.length();
@@ -25,6 +26,7 @@ class Parser {
         }
         //Moving to next character in input
         void advance(){
+            // Move to the next character and update curr_char
             position += 1;
             if (position < n){
                 curr_char = text[position];
@@ -34,14 +36,16 @@ class Parser {
         }
         //Skipping whitespace
         void skip_whitespace(){
+            // Skip any whitespace characters
             while (curr_char != 0 && std::isspace(curr_char)){
                 advance();
             }
         }
         //Parsing numbers
         int number(){
-            std::string result;
-            int number;
+            // Parse a sequence of digits into an integer
+            std::string result; // String to accumulate the digits of the number
+            int number; // Variable to store the final number
             while (curr_char != 0 && std::isdigit(curr_char)){
                 result += curr_char;
                 advance();
@@ -52,6 +56,7 @@ class Parser {
         //Primary Parser
         //Lowest level of the parser that includes parsing for parentheses
         int parse_primary(){
+            // Parse a primary expression, which can be a number or an expression in parentheses
             int result;
             skip_whitespace();
             //Case 1: Number
@@ -75,25 +80,29 @@ class Parser {
         }
         //Unary Parser
         int parse_unary(){
+            // Handle unary plus and minus operators
             skip_whitespace();
             if (curr_char == '+'){
+                // Unary plus doesn't change the value, but we still need to advance and parse the next part
                 advance();
                 return +parse_unary();
             }
             if (curr_char == '-'){
+                // Unary minus negates the value, so we advance and parse the next part, then negate it
                 advance();
                 return -parse_unary();
             }
-            return parse_primary();
+            return parse_primary(); // If it's not a unary operator, parse it as a primary expression
         }
 
         //Power Parser
         int parse_power(){
-            int left; 
-            int right;
-            int temp_position;
-            left = parse_unary();
-            skip_whitespace();
+            // Handle exponentiation, which is right-associative (e.g., 2 ** 3 ** 2 is 2 ** (3 ** 2))
+            int left; // Store the left-hand side of the exponentiation
+            int right; // Store the right-hand side of the exponentiation
+            int temp_position; // Temporary variable to store the position before checking for '**'
+            left = parse_unary(); // Parse the left-hand side first
+            skip_whitespace(); // Check for the '**' operator
             if (curr_char == '*'){
                 //Check for repeat
                 temp_position = position;
