@@ -9,7 +9,7 @@ class Parser {
     private:
         std::string text;
         int n; // Length of string
-        int position; // Position
+        int position; // Position as int
         char curr_char;
 
     public:
