@@ -8,9 +8,10 @@
 class Parser {
     private:
         std::string text;
-        int n; //Length of string
-        int position; //Position
+        int n; // Length of string
+        int position; // Position
         char curr_char;
+
     public:
         Parser(std::string input){
             text = input;
@@ -23,7 +24,7 @@ class Parser {
                 curr_char = 0;
             }
         }
-        //Moving to next character in input
+        // Move to next character
         void advance(){
             position += 1;
             if (position < n){
@@ -32,35 +33,44 @@ class Parser {
                 curr_char = 0;
             }
         }
-        //Skipping whitespace
+        // Skip whitespace
         void skip_whitespace(){
             while (curr_char != 0 && std::isspace(curr_char)){
                 advance();
             }
         }
-        //Parsing numbers
-        int number(){
+
+        // Parse numbers (now supports decimals)
+        double number(){
             std::string result;
-            int number;
-            while (curr_char != 0 && std::isdigit(curr_char)){
+            bool has_decimal = false;
+
+            while (curr_char != 0 && (std::isdigit(curr_char) || curr_char == '.')){
+                if (curr_char == '.'){
+                    if (has_decimal){
+                        throw std::runtime_error("Invalid number format");
+                    }
+                    has_decimal = true;
+                }
                 result += curr_char;
                 advance();
             }
-            number = std::stoi(result);
-            return number;
+
+            return std::stod(result);
         }
-        //Primary Parser
+
+        // Primary parser
         //Lowest level of the parser that includes parsing for parentheses
-        int parse_primary(){
-            int result;
+        double parse_primary(){
+            double result;
             skip_whitespace();
             //Case 1: Number
-            if (curr_char != 0 && std::isdigit(curr_char)){
+            if (curr_char != 0 && (std::isdigit(curr_char) || curr_char == '.')){
                 return number();
             }
             //Case 2: Parenthesis
             if (curr_char == '('){
-                advance(); 
+                advance();
                 //parse inside expression
                 result = parse_expression();
                 skip_whitespace();
@@ -73,8 +83,9 @@ class Parser {
             }
             throw std::runtime_error("Invalid expression");
         }
-        //Unary Parser
-        int parse_unary(){
+
+        // Unary parser
+        double parse_unary(){
             skip_whitespace();
             if (curr_char == '+'){
                 advance();
@@ -87,111 +98,118 @@ class Parser {
             return parse_primary();
         }
 
-        //Power Parser
-        int parse_power(){
-            int left; 
-            int right;
-            int temp_position;
-            left = parse_unary();
+        // Power parser (**)
+        double parse_power(){
+            double left = parse_unary();
             skip_whitespace();
+
             if (curr_char == '*'){
-                //Check for repeat
-                temp_position = position;
+                //check for repeating
+                int temp_position = position;
                 advance();
                 if (curr_char == '*'){
                     advance();
-                    right = parse_power();
-                    return (int)std::pow(left, right);
+                    double right = parse_power();
+                    return std::pow(left, right);
                 } else {
                     position = temp_position;
                     curr_char = '*';
                 }
             }
+
             return left;
         }
 
-        //Term parser
-        int parse_term(){
-            int result;
-            result = parse_power();
+        // Term parser (*, /, %)
+        double parse_term(){
+            double result = parse_power();
             while (true){
                 skip_whitespace();
+
                 if (curr_char == '*'){
                     advance();
                     result *= parse_power();
+
                 } else if (curr_char == '/'){
                     advance();
-                    // Added check for division by zero
-                    int right_side = parse_power();
-                    if (right_side == 0) {
+                    double right_side = parse_power();
+                    if (right_side == 0){
                         throw std::runtime_error("Division by zero");
                     }
                     result /= right_side;
+
                 } else if (curr_char == '%'){
                     advance();
-                    // Added check for modulo by zero
-                    int right_side = parse_power();
-                    if (right_side == 0) {
+                    double right_side = parse_power();
+                    if (right_side == 0){
                         throw std::runtime_error("Modulo by zero");
                     }
-                    result %= right_side;
+                    result = std::fmod(result, right_side);
+
                 } else {
                     break;
                 }
             }
+
             return result;
         }
-        //Expression parser
-        int parse_expression(){
-            int result;
-            result = parse_term();
+
+        // Expression parser (+, -)
+        double parse_expression(){
+            double result = parse_term();
+
             while (true){
                 skip_whitespace();
+
                 if (curr_char == '+'){
                     advance();
                     result += parse_term();
-                } else if (curr_char == '-') {
+
+                } else if (curr_char == '-'){
                     advance();
                     result -= parse_term();
+
                 } else {
                     break;
                 }
             }
+
             return result;
         }
-        // Ensures entire string is evaluated
-        int parse() {
-            int result = parse_expression();
+
+        // Ensure full parsing
+        double parse(){
+            double result = parse_expression();
             skip_whitespace();
             
             // If there are still characters left after parsing a valid expression (e.g., "3 + 4 )")
             // then the overall expression is invalid.
-            if (curr_char != 0) {
+            if (curr_char != 0){
                 throw std::runtime_error("Invalid expression: unexpected characters at the end.");
             }
-            
+
             return result;
         }
 };
 
 //gathers expressions to parse and creates object of it
-int evaluate(const std::string& expression){
-Parser parser(expression);
-return parser.parse(); 
+double evaluate(const std::string& expression){
+    Parser parser(expression);
+    return parser.parse();
 }
 
 int main() {
-std::string expr;
-std::cout<<"Enter your expression: ";
-// Using std::cin >> expr would stop reading at the first whitespace.
-std::getline(std::cin, expr);
-//Wraps the execution in a try-catch block for robust error handling
-try {
-    int result = evaluate(expr);
-    std::cout << "Result: " << result << std::endl;
-} catch (const std::exception& e) {
-    // This will neatly print "Division by zero" or "Invalid expression" without crashing the app
-    std::cerr << "Error: " << e.what() << std::endl; 
-}
-return 0;
+    std::string expr;
+    std::cout << "Enter your expression: ";
+    // Using std::cin >> expr would stop reading at the first whitespace.
+    std::getline(std::cin, expr);
+    //Wraps the execution in a try-catch block for robust error handling
+    try {
+        double result = evaluate(expr);
+        std::cout << "Result: " << result << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+    return 0;
 }
