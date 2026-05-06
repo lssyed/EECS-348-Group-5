@@ -31,13 +31,18 @@ class Parser {
         }
         
         void advance(){
+            // Move to the next character in the input string and update the current character.
 
             position += 1;
 
             if (position < n) {
+                // If we have not reached the end of the input string, we update curr_char to the next character in the string.
+
                 curr_char = text[position];
             }
             else {
+                // If we have reached the end of the input string, we set curr_char to 0 (null character) to indicate that there are no more characters to process.
+
                 curr_char = 0;
             }
         }
@@ -46,7 +51,9 @@ class Parser {
         void skip_whitespace(){
             // Skip whitespace
             
-            while (curr_char != 0 && isspace(curr_char)){
+            while (curr_char != 0 && isspace(curr_char)) {
+                // If the current character is a whitespace, we call advance() to move to the next character.
+
                 advance();
             }
         }
@@ -58,13 +65,21 @@ class Parser {
             string result;
             bool has_decimal = false;
 
-            while (curr_char != 0 && (isdigit(curr_char) || curr_char == '.')){
-                if (curr_char == '.'){
-                    if (has_decimal){
+            while (curr_char != 0 && (isdigit(curr_char) || curr_char == '.')) {
+                // If the current character is a digit or a decimal point, we append it to the result string. We also check for multiple decimal points, which would indicate an invalid number format.
+
+                if (curr_char == '.') {
+                    // If we encounter a decimal point, we check if we have already seen one. If we have, then the number format is invalid (e.g., "3.14.15").
+
+                    if (has_decimal) {
+                        // If we have already seen a decimal point, we throw a runtime error indicating an invalid number format.
+
                         throw runtime_error("Invalid number format");
                     }
+
                     has_decimal = true;
                 }
+
                 result += curr_char;
                 advance();
             }
