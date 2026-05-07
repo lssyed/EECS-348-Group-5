@@ -19,8 +19,8 @@
 * [03/29/2026 Meeting Log](./meetinglogs/03_29_2026%20Meeting%207.pdf)
 * [03_Software_Architecture_Design](./docs/03_Software_Architecture_Document.pdf)
 * [05/03/2026 Meeting Log](./meetignlogs/05_03_2026%20Meeting%208.pdf)
-* [04_Test_Cases](./docs/)
-* [05_User_Manual](./docs/)
+* [04_Test_Cases](./docs/05_Test_Cases.docx.pdf)
+* [05_User_Manual](./docs/06_Users_Manual.docx.pdf)
 
 ## Structure
 This repository follows a clean and logical structure.
