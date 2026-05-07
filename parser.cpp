@@ -130,7 +130,6 @@ class Parser {
             skip_whitespace();
 
             if (curr_char == '+'){
-            
                 advance();
                 return +parse_unary();
             }
@@ -141,12 +140,12 @@ class Parser {
                 return -parse_unary();
             }
             
-            return parse_primary();
+            return parse_power();
         }
 
         // Power parser (**)
         double parse_power(){
-            double left = parse_unary();
+            double left = parse_primary();
             skip_whitespace();
 
             if (curr_char == '*'){
@@ -155,7 +154,7 @@ class Parser {
                 advance();
                 if (curr_char == '*'){
                     advance();
-                    double right = parse_power();
+                    double right = parse_unary();
                     return pow(left, right);
                 } else {
                     position = temp_position;
@@ -168,17 +167,17 @@ class Parser {
 
         // Term parser (*, /, %)
         double parse_term(){
-            double result = parse_power();
+            double result = parse_unary();
             while (true){
                 skip_whitespace();
 
                 if (curr_char == '*'){
                     advance();
-                    result *= parse_power();
+                    result *= parse_unary();
 
                 } else if (curr_char == '/'){
                     advance();
-                    double right_side = parse_power();
+                    double right_side = parse_unary();
                     if (right_side == 0){
                         throw runtime_error("Division by zero");
                     }
@@ -186,7 +185,7 @@ class Parser {
 
                 } else if (curr_char == '%'){
                     advance();
-                    double right_side = parse_power();
+                    double right_side = parse_unary();
                     if (right_side == 0){
                         throw runtime_error("Modulo by zero");
                     }
