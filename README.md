@@ -19,12 +19,14 @@
 * [03/29/2026 Meeting Log](./meetinglogs/03_29_2026%20Meeting%207.pdf)
 * [03_Software_Architecture_Design](./docs/03_Software_Architecture_Document.pdf)
 * [05/03/2026 Meeting Log](./meetignlogs/05_03_2026%20Meeting%208.pdf)
+* [04_Test_Cases](./docs/)
+* [05_User_Manual](./docs/)
 
 ## Structure
 This repository follows a clean and logical structure.
-* `/docs` - Contains project documentation like our project plan, requirements document, and design document.
-* `/meetinglogs` - Contains meeting recap/log for each meeting held. 
-* `/src` - Provides source code for the evaluator. (Later on...)
+* `/docs` - Contains project documentation like our project plan, requirements document, design document, test cases, and user manual.
+* `/meetinglogs` - Contains meeting recaps/logs for each meeting held. 
+* `/src` - Provides source code for the evaluator.
 * `README.md` - Contains project overview and organization of repository.
 
 ---
