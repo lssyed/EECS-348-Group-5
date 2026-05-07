@@ -26,7 +26,6 @@ This repository follows a clean and logical structure.
 * `/meetinglogs` - Contains meeting recap/log for each meeting held. 
 * `/src` - Provides source code for the evaluator. (Later on...)
 * `/test` - Unit tests, integration tests. (Later on...)
-* `/script.build` - Contains all scripts related to build process. (Later on...)
 * `/samples` - Code that supports the documentation. (Later on...)
 * `/tools` - Contains scripts to automate tasks in the project. (Later on...)
 * `README.md` - Contains project overview and organization of repository.
