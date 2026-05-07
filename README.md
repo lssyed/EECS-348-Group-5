@@ -18,6 +18,7 @@
 * [02_Software_Requirements_Specifications](./docs/02-Software-Requirements-Spec.docx.pdf)
 * [03/29/2026 Meeting Log](./meetinglogs/03_29_2026%20Meeting%207.pdf)
 * [03_Software_Architecture_Design](./docs/03_Software_Architecture_Document.pdf)
+* [05/03/2026 Meeting Log](./meetignlogs/05_03_2026%20Meeting%208.pdf)
 
 ## Structure
 This repository follows a clean and logical structure.
