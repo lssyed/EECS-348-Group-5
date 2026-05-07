@@ -25,7 +25,6 @@ This repository follows a clean and logical structure.
 * `/docs` - Contains project documentation like our project plan, requirements document, and design document.
 * `/meetinglogs` - Contains meeting recap/log for each meeting held. 
 * `/src` - Provides source code for the evaluator. (Later on...)
-* `/test` - Unit tests, integration tests. (Later on...)
 * `README.md` - Contains project overview and organization of repository.
 
 ---
