@@ -258,6 +258,7 @@ void run_tests() { //Testing functions to see if the parser is working correctly
     double expected_results[] = {7, 5, 4, 8, 1}; // Expected results for the valid case tests.
 
     for (int i = 0; i < 5; i++) { // Loop through the valid test cases, evaluate each expression, and compare the result to the expected value.
+        try {    
             double result = evaluate(valid_tests[i]);
             cout << "Test " << i+1 << " [" << valid_tests[i] << "]: ";
             if (abs(result - expected_results[i]) < 0.0001) { // Pass if the result is the same, Fail if the result is different.
@@ -265,13 +266,13 @@ void run_tests() { //Testing functions to see if the parser is working correctly
             } else {
                 cout << "FAIL (Expected " << expected_results[i] << ", got " << result << ")" << endl;
             }
-        } catch (const exception& e) { //
+        } catch (const exception& e) { 
             cout << "FAIL (Threw error: " << e.what() << ")" << endl;
         }
     }
 
     // Testing Invalid Expressions (Testing Error Handling)
-    cout << "\n Testing Invalid Expressions (Errors are Expected)" << endl;
+    cout << "\nTesting Invalid Expressions (Errors are Expected)" << endl;
     string invalid_tests[] = {
         "2*(4+3-1",          // Unmatched Parentheses
         "4/0",               // Division by Zero
