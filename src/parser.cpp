@@ -243,7 +243,61 @@ double evaluate(const string& expression){
     return parser.parse();
 }
 
+void run_tests() {
+    cout << "Running Automated Test Suite" << endl;
+
+    // Testing Valid Expressions
+    string valid_tests[] = {
+        "3+4",              // Addition
+        "8-(5-2)",          // Subtraction with Parentheses
+        "10*2/5",           // Multiplication and Division
+        "2**3",             // Exponentiation
+        "-(+1)+(+2)"        // Unary Operators
+    };
+    double expected_results[] = {7, 5, 4, 8, 1};
+
+    for (int i = 0; i < 5; i++) {
+        try {
+            double result = evaluate(valid_tests[i]);
+            cout << "Test " << i+1 << " [" << valid_tests[i] << "]: ";
+            if (abs(result - expected_results[i]) < 0.0001) {
+                cout << "PASS" << endl;
+            } else {
+                cout << "FAIL (Expected " << expected_results[i] << ", got " << result << ")" << endl;
+            }
+        } catch (const exception& e) {
+            cout << "FAIL (Threw error: " << e.what() << ")" << endl;
+        }
+    }
+
+    // Testing Invalid Expressions (Testing Error Handling)
+    cout << "\n Testing Invalid Expressions (Errors are Expected)" << endl;
+    string invalid_tests[] = {
+        "2*(4+3-1",          // Unmatched Parentheses
+        "4/0",               // Division by Zero
+        "7 & 3"              // Invalid Characters
+    };
+
+    for (int i = 0; i < 3; i++) {
+        try {
+            double result = evaluate(invalid_tests[i]);
+            cout << "Invalid Test " << i+1 << " [" << invalid_tests[i] << "]: FAIL (Didn't catch the error)" << endl;
+        } catch (const exception& e) {
+            cout << "Invalid Test " << i+1 << " [" << invalid_tests[i] << "]: PASS (Caught: " << e.what() << ")" << endl;
+        }
+    }
+    cout << "\n" << endl;
+}
+
 int main() {
+    string choice;
+    cout << "Would you like to run built-in tests? (Y/N): ";
+    getline(cin, choice);
+
+    if (choice == "y" || choice == "Y") {
+        run_tests();
+    }
+
     string expr;
     cout << "Enter your expression: ";
     // Using cin >> expr would stop reading at the first whitespace.
